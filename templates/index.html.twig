@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>AR24 Dashboard</title>
+		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+	</head>
+	<body>
+		<h1>🚀 AR24 Dashboard</h1>
+		<div class="container">
+
+
+			<div class="box">
+				<form id="userForm">
+					<h2>Créer un nouvel utilisateur</h2>
+					<div class="form-row">
+						<div class="form-group">
+							<label for="firstName">Firstname *</label>
+							<input type="text" id="firstname" name="firstname" required>
+						</div>
+						<div class="form-group">
+							<label for="lastName">Lastname *</label>
+							<input type="text" id="lastname" name="lastname" required>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group">
+							<label for="email">Email *</label>
+							<input type="email" id="email" name="email" required>
+						</div>
+						<div class="form-group">
+							<label for="gender">Gender *</label>
+						</br>
+						<select id="gender" name="gender">
+							<option value="">-- Sélectionner --</option>
+							<option value="M">Homme</option>
+							<option value="F">Femme</option>
+						</select>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group">
+							<label for="statut">Statut *</label>
+							<select id="statut" name="statut" required onchange="updateStatusFields('statut', 'companyFields')">
+								<option value="particulier">Particulier</option>
+								<option value="professionnel">Professionnel</option>
+							</select>
+
+							<div id="companyFields" style="display: none;">
+								<div class="form-row">
+									<div class="form-group">
+										<label for="company">Entreprise *</label>
+										<input type="text" id="company" name="company">
+									</div>
+									<div class="form-group">
+										<label for="companySiret">SIRET</label>
+										<input type="text" id="company_siret" name="company_siret">
+									</div>
+									<div class="form-group">
+										<label for="companyTva">TVA</label><br>
+										<input type="text" id="company_tva" name="company_tva">
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="form-group">
+							<label for="country">Country *</label>
+							<select id="country" name="country" required>
+								<option value="FR">France</option>
+								<option value="BE">Belgique</option>
+								<option value="DE">Allemagne</option>
+								<option value="ES">Espagne</option>
+								<option value="IT">Italie</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="address1">Adresse *</label>
+						<input type="text" id="address1" name="address1" required>
+					</div>
+
+					<div class="form-group">
+						<label for="address2">Adresse (complément)</label>
+						<input type="text" id="address2" name="address2">
+					</div>
+
+					<div class="form-row">
+						<div class="form-group">
+							<label for="city">City *</label><br>
+							<input type="text" id="city" name="city" required>
+						</div>
+						<div class="form-group">
+							<label for="zipcode">Zipcode *</label>
+							<input type="text" id="zipcode" name="zipcode" required>
+						</div>
+					</div>
+
+					<button type="submit" class="btn">
+						<span class="loading">
+							<span class="spinner"></span>
+						</span>
+						Créer l'utilisateur
+					</button>
+				</form>
+
+				<form id="getUserForm">
+					<h2>Récupérer utilisateur</h2>
+					<input id="userId" name="userId" placeholder="User ID">
+					<button type="submit">Récupérer</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="box">
+			<form id="uploadForm" enctype="multipart/form-data">
+				<h2>Upload fichier</h2>
+				<div class="form-group">
+					<input type="text" id="id_user" name="id_user" placeholder="User ID" required>
+				</div>
+
+				<input type="file" id="filePath" name="filePath" required>
+				<button type="submit">Uploader</button>
+			</form>
+
+			<h2>Envoyer courrier</h2>
+			<form id="sendMailForm">
+				<div class="form-group">
+					<label for="user">User</label><br>
+					<input type="text" id="id_user" name="id_user">
+				</div>
+				<div class="form-group">
+					<label for="to_lastname">Nom destinataire</label>
+					<input type="text" id="to_lastname" name="to_lastname" required>
+				</div>
+				<div class="form-group">
+					<label for="to_firstname">Prénom destinataire</label>
+					<input type="text" id="to_firstname" name="to_firstname" required>
+				</div>
+				<div class="form-group">
+					<label for="to_email">Email destinataire</label>
+					<input type="text" id="to_email" name="to_email" required>
+				</div>
+				<div class="form-group">
+					<label for="dest_statut">Statut destinataire</label>
+					<select id="dest_statut" name="dest_statut" required onchange="updateStatusFields('dest_statut', 'to_company')">
+						<option value="particulier">Particulier</option>
+						<option value="professionnel">Professionnel</option>
+					</select>
+				</div>
+				<div class="form-row" style="display: none;" id="to_company">
+					<div class="form-group">
+						<label for="to_company">Entreprise de destinataire</label>
+						<input type="text" id="to_company" name="to_company">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="content">Contenu</label>
+					<textarea id="content" name="content" required></textarea>
+				</div>
+				<div class="form-group">
+					<label for="attachment">Piéces jointes (1, 2....)</label>
+					<input type="text" id="attachment" name="attachment" required>
+				</div>
+
+				<button type="submit">Envoyer</button>
+			</form>
+
+			<form id="getMailForm">
+				<h2>Récupérer mail</h2>
+				<input id="mail_id" name="mail_id" placeholder="Mail ID">
+				<button type="submit">Récupérer mail</button>
+			</form>
+		</div>
+
+
+		<div class="box box3" id="resultSection">
+			<h2>Résultat</h2>
+			<div id="resultContent"></div>
+		</div>
+
+	</body>
+</html></div>{% block javascripts %}
+<script src="{{ asset('js/app.js') }}"></script>{% endblock %}</body></html>
