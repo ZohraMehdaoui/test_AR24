@@ -18,6 +18,7 @@ No need to install PHP, Node.js, or any other dependencies locally!
    ```bash
    git clone https://github.com/ZohraMehdaoui/test_AR24.git
    cd test_AR24
+   Set API_TOKEN & PRIVATE_KEY value on .env file
    ```
 
 2. **Start all services with Docker Compose**
